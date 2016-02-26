@@ -13,17 +13,35 @@
       <p>
         Brought to you by <a href="http://www.internetoflego.com" target="blank">InternetOfLego.com</a>
       </p>
-      <form action="/login" method="post" class="form col-md-12 center-block">
+      <form action="/survey" method="post" class="form col-md-12 center-block">
         <div class="form-group">
           <input class="form-control input-lg" placeholder="Email" type="text" name="form1[email]" required>
         </div>
 
         <div class="form-group">
           <button class="btn btn-primary btn-lg btn-block">Sign In</button>
+
           <span class="pull-left"><a href="#">Terms and Conditions</a></span>
 
         </div>
       </form>
+
+      <// Facebook Login>
+      <!--
+      <form action="/auth/facebook" method="post" class="form col-md-12 center-block">
+        <button class="btn btn-primary btn-lg btn-block">Facebook Login</button>
+      </form>
+    -->
+
+    <div>
+    <h3>Passport Logins </h3>
+
+    <a href="/login" class="btn btn-default"><span class="fa fa-user"></span> Local Login</a>
+    <a href="/signup" class="btn btn-default"><span class="fa fa-user"></span> Local Signup</a>
+    <a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span> Facebook</a>
+    <a href="/auth/twitter" class="btn btn-info"><span class="fa fa-twitter"></span> Twitter</a>
+    <a href="/auth/google" class="btn btn-danger"><span class="fa fa-google-plus"></span> Google+</a>
+    </div>
     </div>
   </div>
   <div class="footer">

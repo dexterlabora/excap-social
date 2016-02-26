@@ -1,0 +1,49 @@
+<div id="content">
+  <div id="container">
+    <div class="header">
+      <div id="icon_cell">
+      <!--  <img class="text-center" src="/img/barista-lego.jpg" style="width:40%; margin:10px;"> -->
+      </div>
+    </div>
+
+    <div id="continue">
+      <h1>User Administration Page</h1>
+
+    </div>
+
+    <div>
+      <p>Click-through User Data</p>
+      {{#each data}}
+        {{#each this}}
+            <div class="row">
+              {{this}}
+              {{#each this}}
+                  <div class="row">
+                    {{this}}
+                    {{#each this}}
+                        <div class="row">
+                          {{this}}
+                          {{#each this}}
+                              <div class="row">
+                                {{this}}
+                              </div>
+                          {{/each}}
+                        </div>
+                    {{/each}}
+                  </div>
+              {{/each}}
+            </div>
+        {{/each}}
+      {{/each}}
+    </div>
+
+
+
+
+
+  <div class="footer">
+    <h3>POWERED BY</h3>
+    <img class="text-center" src="/img/cisco-meraki-gray.png" style="width:10%; margin:10px;">
+  </div>
+
+</div>
