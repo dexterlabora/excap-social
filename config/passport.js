@@ -83,14 +83,12 @@ module.exports = function(passport) {
     },
     function(req, email, password, done) {
         console.log("local email signup, email: "+email);
-        console.log("debugging. req object"+util.inspect(req, false, null));
         if (email)
             email = email.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
             
         // asynchronous
         process.nextTick(function() {
             // if the user is not already logged in:
-            console.log("local tick, req.user: "+req.user);
             if (!req.user) {
                 console.log("looking for email: "+email);
                 User.findOne({ 'local.email' :  email }, function(err, user) {
