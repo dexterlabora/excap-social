@@ -3,6 +3,7 @@ var LocalStrategy    = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var TwitterStrategy  = require('passport-twitter').Strategy;
 var GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy;
+var LinkedInStrategy = require('passport-linkedin').Strategy;
 
 // load up the user model
 var User       = require('../app/models/user');
@@ -216,6 +217,81 @@ module.exports = function(passport) {
                 });
 
             }
+        });
+
+    }));
+
+    // =========================================================================
+    // LinkedIn
+    // =========================================================================
+    passport.use(new LinkedInStrategy({
+        consumerKey     : configAuth.linkedinAuth.consumerKey,
+        consumerSecret  : configAuth.linkedinAuth.consumerSecret,
+        callbackURL     : configAuth.linkedinAuth.callbackURL,
+    },
+    function(req, token, tokenSecret, profile, done) {
+
+        // asynchronous
+        process.nextTick(function() {
+
+            // check if the user is already logged in
+            if (!req.user) {
+
+                User.findOne({ 'linkedin.id' : profile.id }, function(err, user) {
+                    if (err)
+                        return done(err);
+
+                    if (user) {
+                        // if there is a user id already but no token (user was linked at one point and then removed)
+                        if (!user.linkedin.token) {
+                            user.linkedin.token       = token;
+                            user.linkedin.username    = profile.username;
+                            user.linkedin.displayName = profile.displayName;
+
+                            user.save(function(err) {
+                                if (err)
+                                    return done(err);
+
+                                return done(null, user);
+                            });
+                        }
+
+                        return done(null, user); // user found, return that user
+                    } else {
+                        // if there is no user, create them
+                        var newUser                 = new User();
+
+                        newUser.linkedin.id          = profile.id;
+                        newUser.linkedin.token       = token;
+                        newUser.linkedin.username    = profile.username;
+                        newUser.linkedin.displayName = profile.displayName;
+
+                        newUser.save(function(err) {
+                            if (err)
+                                return done(err);
+
+                            return done(null, newUser);
+                        });
+                    }
+                });
+
+            } else {
+                // user already exists and is logged in, we have to link accounts
+                var user                 = req.user; // pull the user out of the session
+
+                user.linkedin.id          = profile.id;
+                user.linkedin.token       = token;
+                user.linkedin.username    = profile.username;
+                user.linkedin.displayName = profile.displayName;
+
+                user.save(function(err) {
+                    if (err)
+                        return done(err);
+
+                    return done(null, user);
+                });
+            }
+
         });
 
     }));

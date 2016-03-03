@@ -36,6 +36,10 @@
     "passport-google-oauth": "^1.0.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "passport-linkedin": "~1.0.0",
+    "session": "~0.1.0",
+    "connect-mongo": "~1.1.0",
+    "express-mongo": "~0.3.0"
   }
 }
