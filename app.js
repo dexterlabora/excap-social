@@ -111,8 +111,7 @@ var store = new MongoDBStore({
 });
 // Catch errors
 store.on('error', function(error) {
-  assert.ifError(error);
-  assert.ok(false);
+    console.log("error connecting to MongoDBStore: "+error);
 });
 
 app.use(require('express-session')({
@@ -129,12 +128,14 @@ app.use(require('express-session')({
 // =================================
 // define the static resources for the splash pages
 // =================================
+app.use(express.static('./public'));
+/*
 var path = require('path');
 app.use("/public", express.static(path.join(__dirname, 'public')));
 app.use("/css",  express.static(__dirname + '/public/css'));
 app.use("/img", express.static(__dirname + '/public/img'));
 app.use("/js", express.static(__dirname + '/public/js'));
-
+*/
 
 
 // instruct the app to use the `bodyParser()` middleware for all routes
@@ -234,10 +235,11 @@ app.get('/auth/login', function(req, res) {
 });
 
 // process the login form
-app.post('/auth/login', passport.authenticate('local-login', {
-    successRedirect : '/auth/wifi', // redirect to the secure profile section
-    failureRedirect : '/auth/login', // redirect back to the signup page if there is an error
-    failureFlash : true // allow flash messages
+app.post('/auth/login', 
+    passport.authenticate('local-login', {
+        successRedirect : '/auth/wifi', // redirect to the secure profile section
+        failureRedirect : '/auth/login', // redirect back to the signup page if there is an error
+        failureFlash : true // allow flash messages
 }));
 
 // SIGNUP =================================
@@ -247,18 +249,20 @@ app.get('/auth/signup', function(req, res) {
 });
 
 // process the signup form
-app.post('/auth/signup', passport.authenticate('local-signup', {
-    successRedirect : '/auth/wifi', // redirect to the secure profile section
-    failureRedirect : '/auth/signup', // redirect back to the signup page if there is an error
-    failureFlash : true // allow flash messages
-}));
+app.post('/auth/signup', 
+    passport.authenticate('local-signup', {
+        successRedirect : '/auth/wifi', // redirect to the secure profile section
+        failureRedirect : '/auth/signup', // redirect back to the signup page if there is an error
+        failureFlash : true // allow flash messages
+    })
+);
 
 // facebook -------------------------------
 
 // send to facebook to do the authentication
 app.get('/auth/facebook',
-  passport.authenticate('facebook', {
-    scope : 'email'
+    passport.authenticate('facebook', {
+        scope : 'email'
   })
 );
 
@@ -327,7 +331,10 @@ app.get('/auth/google/callback',
 // authenticate wireless session with Cisco Meraki
 app.get('/auth/wifi', function(req, res){
   req.session.splashlogin_time = new Date().toString();
-  req.session.user = req.user; // link user account to session
+  
+  // link passport user account to session
+  req.session.user = req.user; 
+  
   console.log("Session data at login page = " + util.inspect(req.session, false, null));
 
     // *** Send user to success page : success_url
