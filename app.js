@@ -268,6 +268,23 @@ app.get('/auth/facebook/callback',
 );
 
 // twitter -------------------------------
+<<<<<<< HEAD
+=======
+
+// send to facebook to do the authentication
+app.get('/auth/twitter',
+    passport.authenticate('twitter', {
+        scope : 'email'
+  })
+);
+
+app.get('/auth/twitter/callback',
+  passport.authenticate('twitter', {
+    successRedirect : '/auth/wifi',
+    failureRedirect : '/auth/twitter'
+  })
+);
+>>>>>>> 183d3da41e89453b97a602ef94094e93a3b26727
 
 // send to facebook to do the authentication
 app.get('/auth/twitter',
