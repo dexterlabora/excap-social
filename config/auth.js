@@ -11,8 +11,8 @@ module.exports = {
     },
 
     'twitterAuth' : {
-        'consumerKey'        : 'your-consumer-key-here',
-        'consumerSecret'     : 'your-client-secret-here',
+        'consumerKey'        : 'ezQEr9m0hsBCXmtNXdLuUg5KV',
+        'consumerSecret'     : 'yMWhmXrwapDX5rQZXJ7TLY7TGMDRoIn1OKyS1w6WDCGlmExCbm',
         'callbackURL'        : 'https://app.internetoflego.com:8181/auth/twitter/callback'
     },
 

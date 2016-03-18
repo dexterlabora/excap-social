@@ -273,6 +273,21 @@ app.get('/auth/facebook/callback',
   })
 );
 
+// twitter -------------------------------
+
+// send to facebook to do the authentication
+app.get('/auth/twitter',
+    passport.authenticate('twitter', {
+        scope : 'email'
+  })
+);
+
+app.get('/auth/twitter/callback',
+  passport.authenticate('twitter', {
+    successRedirect : '/auth/wifi',
+    failureRedirect : '/auth/twitter'
+  })
+);
 
 // handle the callback after facebook has authenticated the user
 /*
