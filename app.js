@@ -261,10 +261,7 @@ app.post('/auth/signup',
 
 // send to facebook to do the authentication
 app.get('/auth/facebook',
-    passport.authenticate('facebook', {
-        scope : 'email'
-  })
-);
+   passport.authenticate('facebook'));
 
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', {
@@ -277,10 +274,7 @@ app.get('/auth/facebook/callback',
 
 // send to facebook to do the authentication
 app.get('/auth/twitter',
-    passport.authenticate('twitter', {
-        scope : 'email'
-  })
-);
+    passport.authenticate('twitter'));
 
 app.get('/auth/twitter/callback',
   passport.authenticate('twitter', {
@@ -289,34 +283,11 @@ app.get('/auth/twitter/callback',
   })
 );
 
-// handle the callback after facebook has authenticated the user
-/*
-app.get('/auth/facebook/callback',function(req, res, next) {
-  passport.authenticate('facebook',
-    function(err, user, info) {
-      if (err) { return next(err); }
-      if (!user) { return res.redirect('/auth/facebook'); }
-      req.logIn(user, function(err) {
-        // store user id with session log
-
-        req.session.userId = user.id;
-        req.session.userName = user.username;
-        if (err) { return next(err); }
-        //return res.render('/auth/wifi', req.session);
-        return res.redirect('/auth/wifi');
-      });
-    })(req, res, next);
-});
-*/
-
 
 // linkedin --------------------------------
 
 app.get('/auth/linkedin',
-  passport.authenticate('linkedin',{
-    scope : ['r_basicprofile', 'r_emailaddress']
-  })
-);
+  passport.authenticate('linkedin'));
 
 app.get('/auth/linkedin/callback',
   passport.authenticate('linkedin', {

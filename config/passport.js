@@ -241,6 +241,7 @@ module.exports = function(passport) {
         consumerKey     : configAuth.linkedinAuth.consumerKey,
         consumerSecret  : configAuth.linkedinAuth.consumerSecret,
         callbackURL     : configAuth.linkedinAuth.callbackURL,
+        scope:        [ 'r_basicprofile', 'r_emailaddress'],
     },
     function(req, token, tokenSecret, profile, done) {
 
