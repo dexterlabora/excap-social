@@ -114,7 +114,7 @@ store.on('error', function(error) {
     console.log("error connecting to MongoDBStore: "+error);
 });
 
-app.use(require('express-session')({
+app.use(session({
   secret: 'supersecret',  // this secret is used to encrypt cookie and session state. Client will not see this.
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 // 1 day
@@ -125,17 +125,7 @@ app.use(require('express-session')({
 }));
 
 
-// =================================
-// define the static resources for the splash pages
-// =================================
-app.use(express.static('./public'));
-/*
-var path = require('path');
-app.use("/public", express.static(path.join(__dirname, 'public')));
-app.use("/css",  express.static(__dirname + '/public/css'));
-app.use("/img", express.static(__dirname + '/public/img'));
-app.use("/js", express.static(__dirname + '/public/js'));
-*/
+
 
 
 // instruct the app to use the `bodyParser()` middleware for all routes
@@ -191,6 +181,7 @@ app.get('/click', function (req, res) {
   req.session.success_url = 'https://' + req.session.host + "/success";
   req.session.continue_url = req.query.user_continue_url;
 
+  
   // display session data for debugging purposes
   console.log("Session data at click page = " + util.inspect(req.session, false, null));
 
@@ -199,7 +190,9 @@ app.get('/click', function (req, res) {
 
 });
 
+// DEPRECATED
 
+/*
 // ***************************************
 // No "login" required. Just Terms, branding and survey
 // ***************************************
@@ -221,6 +214,7 @@ app.post('/survey', function(req, res){
   res.end();
 
 });
+*/
 
 // ****************************************
 // PASSPORT Login Methods
@@ -235,7 +229,7 @@ app.get('/auth/login', function(req, res) {
 });
 
 // process the login form
-app.post('/auth/login', 
+app.post('/auth/login',
     passport.authenticate('local-login', {
         successRedirect : '/auth/wifi', // redirect to the secure profile section
         failureRedirect : '/auth/login', // redirect back to the signup page if there is an error
@@ -249,7 +243,7 @@ app.get('/auth/signup', function(req, res) {
 });
 
 // process the signup form
-app.post('/auth/signup', 
+app.post('/auth/signup',
     passport.authenticate('local-signup', {
         successRedirect : '/auth/wifi', // redirect to the secure profile section
         failureRedirect : '/auth/signup', // redirect back to the signup page if there is an error
@@ -273,26 +267,21 @@ app.get('/auth/facebook/callback',
   })
 );
 
+// twitter -------------------------------
 
-// handle the callback after facebook has authenticated the user
-/*
-app.get('/auth/facebook/callback',function(req, res, next) {
-  passport.authenticate('facebook',
-    function(err, user, info) {
-      if (err) { return next(err); }
-      if (!user) { return res.redirect('/auth/facebook'); }
-      req.logIn(user, function(err) {
-        // store user id with session log
+// send to facebook to do the authentication
+app.get('/auth/twitter',
+    passport.authenticate('twitter', {
+        scope : 'email'
+  })
+);
 
-        req.session.userId = user.id;
-        req.session.userName = user.username;
-        if (err) { return next(err); }
-        //return res.render('/auth/wifi', req.session);
-        return res.redirect('/auth/wifi');
-      });
-    })(req, res, next);
-});
-*/
+app.get('/auth/twitter/callback',
+  passport.authenticate('twitter', {
+    successRedirect : '/auth/wifi',
+    failureRedirect : '/auth/twitter'
+  })
+);
 
 
 // linkedin --------------------------------
@@ -305,9 +294,14 @@ app.get('/auth/linkedin',
 
 app.get('/auth/linkedin/callback',
   passport.authenticate('linkedin', {
-    successRedirect : '/auth/wifi',
+    //successRedirect : '/auth/wifi',
     failureRedirect : '/login'
-  })
+  }),
+  function(req,res){
+      // save profile info to session 
+   //   req.session.user = req.user;    
+      res.redirect('/auth/wifi');
+  }
 );
 
 // google ---------------------------------
@@ -331,12 +325,13 @@ app.get('/auth/google/callback',
 // authenticate wireless session with Cisco Meraki
 app.get('/auth/wifi', function(req, res){
   req.session.splashlogin_time = new Date().toString();
-  
-  // link passport user account to session
-  req.session.user = req.user; 
-  
-  console.log("Session data at login page = " + util.inspect(req.session, false, null));
 
+  // link passport user account to session
+  //req.session.user = req.user;
+
+  console.log("Session data at login page = " + util.inspect(req.session, false, null));
+  console.log("User data at click page = " + util.inspect(req.user, false, null));
+  
     // *** Send user to success page : success_url
   res.writeHead(302, {'Location': req.session.base_grant_url + "?continue_url="+req.session.success_url});
   res.end();
@@ -419,6 +414,17 @@ app.get('/terms', function (req, res) {
 // ################################################################
 // Start application
 // ################################################################
+// =================================
+// define the static resources for the splash pages
+// =================================
+app.use(express.static('./public'));
+/*
+var path = require('path');
+app.use("/public", express.static(path.join(__dirname, 'public')));
+app.use("/css",  express.static(__dirname + '/public/css'));
+app.use("/img", express.static(__dirname + '/public/img'));
+app.use("/js", express.static(__dirname + '/public/js'));
+*/
 
 // start web services
 // app.listen(process.env.PORT || port);
