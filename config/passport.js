@@ -85,7 +85,7 @@ module.exports = function(passport) {
         console.log("local email signup, email: "+email);
         if (email)
             email = email.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
-            
+
         // asynchronous
         process.nextTick(function() {
             // if the user is not already logged in:
@@ -167,7 +167,6 @@ module.exports = function(passport) {
 
     },
     function(req, token, refreshToken, profile, done) {
-
         // asynchronous
         process.nextTick(function() {
 
@@ -261,6 +260,7 @@ module.exports = function(passport) {
                             user.linkedin.token       = token;
                             user.linkedin.username    = profile.username;
                             user.linkedin.displayName = profile.displayName;
+                            user.linkedin.profile     = profile;
 
                             user.save(function(err) {
                                 if (err)
@@ -279,6 +279,7 @@ module.exports = function(passport) {
                         newUser.linkedin.token       = token;
                         newUser.linkedin.username    = profile.username;
                         newUser.linkedin.displayName = profile.displayName;
+                        newUser.linkedin.profile     = profile;
 
                         newUser.save(function(err) {
                             if (err)
@@ -297,6 +298,7 @@ module.exports = function(passport) {
                 user.linkedin.token       = token;
                 user.linkedin.username    = profile.username;
                 user.linkedin.displayName = profile.displayName;
+                user.linkedin.profile = profile;
 
                 user.save(function(err) {
                     if (err)
@@ -322,7 +324,7 @@ module.exports = function(passport) {
 
     },
     function(req, token, tokenSecret, profile, done) {
-
+        
         // asynchronous
         process.nextTick(function() {
 
@@ -383,7 +385,7 @@ module.exports = function(passport) {
                     return done(null, user);
                 });
             }
-
+            
         });
 
     }));
@@ -400,7 +402,7 @@ module.exports = function(passport) {
 
     },
     function(req, token, refreshToken, profile, done) {
-
+        
         // asynchronous
         process.nextTick(function() {
 
