@@ -5,27 +5,27 @@
 module.exports = {
 
     'facebookAuth' : {
-        'clientID'        : '1502099026749580', // your App ID
-        'clientSecret'    : 'f7e037c16df8bcf2d4466f4a1b7d150b', // your App Secret
-        'callbackURL'     : 'https://app.internetoflego.com:8181/auth/facebook/callback'
+        'clientID'        : 'xxxxxxxxx', // your App ID
+        'clientSecret'    : 'xxxxxxxxx', // your App Secret
+        'callbackURL'     : 'https://localhost:8181/auth/facebook/callback'
     },
 
     'twitterAuth' : {
-        'consumerKey'        : 'ezQEr9m0hsBCXmtNXdLuUg5KV',
-        'consumerSecret'     : 'yMWhmXrwapDX5rQZXJ7TLY7TGMDRoIn1OKyS1w6WDCGlmExCbm',
-        'callbackURL'        : 'https://app.internetoflego.com:8181/auth/twitter/callback'
+        'consumerKey'        : 'xxxxxxxxx',
+        'consumerSecret'     : 'xxxxxxxxx',
+        'callbackURL'        : 'https://localhost:8181/auth/twitter/callback'
     },
 
     'linkedinAuth' : {
-        'consumerKey'        : '77a7beudecjt7u',
-        'consumerSecret'     : 'd8xns39PGjJ6kkL8',
-        'callbackURL'        : 'https://app.internetoflego.com:8181/auth/linkedin/callback'
+        'consumerKey'        : 'xxxxxxxxx',
+        'consumerSecret'     : 'xxxxxxxxx',
+        'callbackURL'        : 'https://localhost:8181/auth/linkedin/callback'
     },
 
     'googleAuth' : {
-        'clientID'         : '188593401620-8tl0ur8p0k55vu91i7jtav8sekl540nh.apps.googleusercontent.com',
-        'clientSecret'     : 'lPmdglTKWD5In-6x2LBhECjg',
-        'callbackURL'      : 'https://app.internetoflego.com:8181/auth/google/callback'
+        'clientID'         : 'xxxxxxxxx.apps.googleusercontent.com',
+        'clientSecret'     : 'xxxxxxxxx',
+        'callbackURL'      : 'https://localhost:8181/auth/google/callback'
     }
 
 };
