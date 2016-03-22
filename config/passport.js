@@ -399,8 +399,8 @@ module.exports = function(passport) {
         clientID        : configAuth.googleAuth.clientID,
         clientSecret    : configAuth.googleAuth.clientSecret,
         callbackURL     : configAuth.googleAuth.callbackURL,
+        scope           : ['profile', 'email'],
         passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
-
     },
     function(req, token, refreshToken, profile, done) {
         

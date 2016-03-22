@@ -262,10 +262,7 @@ app.get('/auth/twitter/callback',
 
 // send to facebook to do the authentication
 app.get('/auth/twitter',
-    passport.authenticate('twitter', {
-        scope : 'email'
-  })
-);
+    passport.authenticate('twitter'));
 
 app.get('/auth/twitter/callback',
   passport.authenticate('twitter', {
@@ -295,12 +292,9 @@ app.get('/auth/linkedin/callback',
 // GOOGLE ---------------------------------
 
 // send to google to do the authentication
-app.get('/auth/google', passport.authenticate('google',{
-  scope : ['profile', 'email']
-  })
-);
+app.get('/auth/google', passport.authenticate('google'));
 
-// the callback after google has authenticated the user
+	// the callback after google has authenticated the user
 app.get('/auth/google/callback',
   passport.authenticate('google', {
     successRedirect : '/auth/wifi',
