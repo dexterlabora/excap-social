@@ -7,7 +7,7 @@ var fs = require('fs');
 
 module.exports = {
   port: 8181,
-  key  : fs.readFileSync('./ssl/app.internetoflego.com.key'),
-  cert : fs.readFileSync('./ssl/app.internetoflego.com-gd-signed.crt'),
+  key  : fs.readFileSync('./ssl/yourserver.key'),
+  cert : fs.readFileSync('./ssl/yourserver.com-gd-signed.crt'),
   ca: [fs.readFileSync('./ssl/gd_bundle-g2-g1.crt')]
 };
