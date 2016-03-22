@@ -260,17 +260,6 @@ app.get('/auth/twitter/callback',
   })
 );
 
-// send to facebook to do the authentication
-app.get('/auth/twitter',
-    passport.authenticate('twitter'));
-
-app.get('/auth/twitter/callback',
-  passport.authenticate('twitter', {
-    successRedirect : '/auth/wifi',
-    failureRedirect : '/auth/twitter'
-  })
-);
-
 
 // LINKEDIN --------------------------------
 
@@ -279,14 +268,9 @@ app.get('/auth/linkedin',
 
 app.get('/auth/linkedin/callback',
   passport.authenticate('linkedin', {
-    //successRedirect : '/auth/wifi',
-    failureRedirect : '/login'
-  }),
-  function(req,res){
-      // save profile info to session 
-   //   req.session.user = req.user;    
-      res.redirect('/auth/wifi');
-  }
+    successRedirect : '/auth/wifi',
+    failureRedirect : '/auth/linkedin'
+  }) 
 );
 
 // GOOGLE ---------------------------------
@@ -298,7 +282,7 @@ app.get('/auth/google', passport.authenticate('google'));
 app.get('/auth/google/callback',
   passport.authenticate('google', {
     successRedirect : '/auth/wifi',
-    failureRedirect : '/login'
+    failureRedirect : '/auth/google'
   })
 );
 
