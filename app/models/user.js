@@ -7,31 +7,35 @@ var userSchema = mongoose.Schema({
 
     local            : {
         email        : String,
-        password     : String
+        password     : String,  
     },
     facebook         : {
         id           : String,
         token        : String,
         email        : String,
-        name         : String
+        name         : String,
+        profile      : Object
     },
     twitter          : {
         id           : String,
         token        : String,
         displayName  : String,
-        username     : String
+        username     : String,
+        profile      : Object
     },
     google           : {
         id           : String,
         token        : String,
         email        : String,
-        name         : String
+        name         : String,
+        profile      : Object
     },
     linkedin         : {
         id           : String,
         token        : String,
         email        : String,
-        name         : String
+        name         : String,
+        profile      : Object
     }
 
 });

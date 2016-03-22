@@ -6,7 +6,7 @@
 /*
 External Captive Portal (ExCAP) for Cisco Meraki MR access points and MX security appliances.
 
-This application provides a basic click-through and sign-on (with RADIUS auth) splash page where the login will complete on a success page.
+This application provides a click-through (with Passports) and sign-on (with RADIUS auth) splash page where the login will complete on a success page.
 
 Click-through usage:   https://yourserver/click
   Authentication provided by Passport OAuth for social network login
@@ -23,18 +23,25 @@ NOTE:
 The config directory will need to be updated prior to running application.
 The database, social OAuth API keys and SSL certificates will need to be defined.
 
-All session and user data is stored in a local MongoDB, which needs to be configured first!
+All session and user data is stored in a local MongoDB, which needs to be installed and running first!
 https://docs.mongodb.org/manual/installation/
 
 All HTML content uses Handlebars to provide dynamic data to the various pages.
 The structure of the HTML pages can be modified under /views/
 Images, styles and client scripts are stored in /public/
 
-Written by Cory Guynn - 2015
+
+
+This application comes with no guarantee and is intended as a proof of concept. 
+Proper testing and security (SSL) should be configured and verified before using in a production environment.
+
+Feel free to use, abuse and help contribue to this code.
+
+Written by Cory Guynn - 2016
 www.InternetOfLego.com
 
-This application comes with no guarantee and is intended as a proof of concept.
-Feel free to use and abuse this code.
+I <3 open source
+
 */
 
 // ################################################################
@@ -190,38 +197,14 @@ app.get('/click', function (req, res) {
 
 });
 
-// DEPRECATED
-
-/*
-// ***************************************
-// No "login" required. Just Terms, branding and survey
-// ***************************************
-// handle form submit button and send data to Cisco Meraki - Click-through
-app.post('/survey', function(req, res){
-
-  // save data from HTML form
-  req.session.form = req.body.form1;
-  req.session.splashlogin_time = new Date().toString();
-
-  // do something with the session and form data (i.e. console, database, file, etc. )
-    // write to console
-  console.log("Session data at login page = " + util.inspect(req.session, false, null));
-
-  // forward request onto Cisco Meraki to grant access
-    // *** Send user to success page : success_url
-  res.writeHead(302, {'Location': req.session.base_grant_url + "?continue_url="+req.session.success_url});
-
-  res.end();
-
-});
-*/
 
 // ****************************************
 // PASSPORT Login Methods
 // ****************************************
 
-// email --------------------------------
-// LOGIN ===============================
+// LOCAL --------------------------------
+
+// Login ===============================
 
 // show the login form
 app.get('/auth/login', function(req, res) {
@@ -236,7 +219,7 @@ app.post('/auth/login',
         failureFlash : true // allow flash messages
 }));
 
-// SIGNUP =================================
+// Signup =================================
 // show the signup form
 app.get('/auth/signup', function(req, res) {
     res.render('signup', { message: req.flash('signupMessage') });
@@ -251,7 +234,7 @@ app.post('/auth/signup',
     })
 );
 
-// facebook -------------------------------
+// FACEBOOK -------------------------------
 
 // send to facebook to do the authentication
 app.get('/auth/facebook',
@@ -264,9 +247,7 @@ app.get('/auth/facebook/callback',
   })
 );
 
-// twitter -------------------------------
-<<<<<<< HEAD
-=======
+// TWITTER -------------------------------
 
 // send to facebook to do the authentication
 app.get('/auth/twitter',
@@ -278,10 +259,7 @@ app.get('/auth/twitter/callback',
     failureRedirect : '/auth/twitter'
   })
 );
->>>>>>> 183d3da41e89453b97a602ef94094e93a3b26727
 
-<<<<<<< HEAD
-=======
 // send to facebook to do the authentication
 app.get('/auth/twitter',
     passport.authenticate('twitter', {
@@ -296,9 +274,8 @@ app.get('/auth/twitter/callback',
   })
 );
 
->>>>>>> 02e8e8c8df9694cea2ec40d6e9e56d586f694b54
 
-// linkedin --------------------------------
+// LINKEDIN --------------------------------
 
 app.get('/auth/linkedin',
   passport.authenticate('linkedin'));
@@ -315,7 +292,7 @@ app.get('/auth/linkedin/callback',
   }
 );
 
-// google ---------------------------------
+// GOOGLE ---------------------------------
 
 // send to google to do the authentication
 app.get('/auth/google', passport.authenticate('google',{
@@ -331,19 +308,18 @@ app.get('/auth/google/callback',
   })
 );
 
-
+// ====================================================
 // WiFi Auth ---------------------------------
+// ====================================================
+
 // authenticate wireless session with Cisco Meraki
 app.get('/auth/wifi', function(req, res){
   req.session.splashlogin_time = new Date().toString();
 
-  // link passport user account to session
-  //req.session.user = req.user;
-
+  // debug - monitor : display all session data on console
   console.log("Session data at login page = " + util.inspect(req.session, false, null));
-  console.log("User data at click page = " + util.inspect(req.user, false, null));
   
-    // *** Send user to success page : success_url
+    // *** redirect user to Meraki to process authentication, then send client to success_url
   res.writeHead(302, {'Location': req.session.base_grant_url + "?continue_url="+req.session.success_url});
   res.end();
 });
@@ -425,22 +401,13 @@ app.get('/terms', function (req, res) {
 // ################################################################
 // Start application
 // ################################################################
-// =================================
+
+
 // define the static resources for the splash pages
-// =================================
 app.use(express.static('./public'));
-/*
-var path = require('path');
-app.use("/public", express.static(path.join(__dirname, 'public')));
-app.use("/css",  express.static(__dirname + '/public/css'));
-app.use("/img", express.static(__dirname + '/public/img'));
-app.use("/js", express.static(__dirname + '/public/js'));
-*/
 
 // start web services
-// app.listen(process.env.PORT || port);
-console.log("Server listening on port " + port);
-
 https.createServer(options, app).listen(port, function () {
    console.log('Started!');
 });
+console.log("Server listening on port " + port);
