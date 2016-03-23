@@ -1,14 +1,23 @@
-# Cisco Meraki ExCap Splash Page Server
+# Cisco Meraki ExCap Splash Page Server /w Social OAuth using Passport
 
 Overview
 
-This Node.JS applications provides an example of the ExCAP interface for delivering a custom Captive Portal / Splash Page for Cisco Meraki access points.
+This NodeJS applications provides an example of the ExCap interface for delivering a custom Captive Portal / Splash Page for Cisco Meraki access points.
 
 More info about the ExCap API: https://meraki.cisco.com/lib/pdf/meraki_whitepaper_captive_portal.pdf
 
-#Usage
+Complete write-up for this application can be found here: http://www.InternetOfLEGO.com/wifi-hotspot-with-social-oauth-passport-mongodb
 
-Configure the Wi-Fi SSID
+#Written by
+Cory Guynn, 2015
+www.InternetOfLego.com
+
+##Enjoy!
+
+
+#Installation
+
+##Configure the Cisco Meraki Wi-Fi SSID
 
 Logon to the Meraki Dashboard
 
@@ -24,12 +33,12 @@ Dashboard --> Wireless --> Configure --> Splash Page Select: Use custom URL
 
 Enter the URL for the splash page. This flow provides two options, Sign-on and Click-through.
 
-#Sign-on
+###Sign-on w/ RADIUS
 
 http://yourserver/signon
 
 
-#Click-through
+###Click-through w/ Social Passport
 
 http://yourserver/click
 
@@ -37,42 +46,13 @@ http://yourserver/click
 #Run
 
 
-Clone the app
-
-npm install
-
-node app.js        or as a service by:  pm2 start app.js --name excap
-   
-
-#Report
-You can see the session data by going to
-
-http://yourserver/excapData/excap
-
-#Enjoy!
-
-Note: You should run this using SSL. The reports are not protected in anyway, so either sort that out or disable the mongodb REST route.
-
-
-#Written by
-Cory Guynn, 2015
-www.InternetOfLego.com
-
-
-#Installation
-
-
-
+Clone and install the app
+```
 git clone "https://github.com/dexterlabora/excap-social"
 
-
-##Install NPM packages
-
-Change into the "/excap-social" directory and install the remaining packages.
-
-cd excap-social
 npm install
 
+```   
 
 ##Install MongoDB
 
@@ -119,7 +99,7 @@ module.exports = {
 ```
 ###config/config.js
 
-This is where you will define the web port that the server listens on (i.e. 8181) and the SSL certificate information. You will need to create your own self-signed certificate or purchase one. I used a GoDaddy SSL certificate for this example and placed the files in an SSL directory I created. For more information, this article was really helpful to get using SSL with the NodeJS.
+This is where you will define the web port that the server listens on (i.e. 8181) and the SSL certificate information. You will need to create your own self-signed certificate or purchase one. This examples uses a GoDaddy SSL certificate and is placed the files in an SSL directory. 
 ```
 // Configure the app settings here such as Web port, certificates, etc.
 
@@ -146,7 +126,7 @@ module.exports = {
 };
 ``` 
 
-##Start the server and test
+#Start the Server and Test
 
 While in the /excap-social directory, use "node" to start the application.
 
@@ -158,6 +138,25 @@ To run this app in production, I highly suggest using PM2. This will run the Nod
 ```
 pm2 start app.js --name "excap-social"
 ```
+
+
+
+#Reporting
+You can see the session data by going to the MongoDB REST API. This should be disabled.
+
+http://yourserver/ap1/v1/users
+http://yourserver/ap1/v1/sessions
+
+
+
+
+#Security Notes
+
+- You should run this using SSL. 
+- Store your session and user data in a secure system behind a firewall
+- Disable the built-in MongoDB Rest interface (which is for demo only)
+
+
 
 ##Disable MongoDB REST interface
 
@@ -178,5 +177,3 @@ var expressMongoRest = require('express-mongo-rest');
 Disclaimer
 
 This ExCap server is intended as a proof of concept and comes with no guarantee. Please feel free to use, abuse or contribute to this code. Feedback is appreciated!
-
-
