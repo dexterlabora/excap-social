@@ -2,14 +2,14 @@
 
 ##Overview
 
-This NodeJS applications provides an example of the ExCap interface for delivering a custom Captive Portal / Splash Page for Cisco Meraki access points.
+This NodeJS applications demonstrates how the ExCap API can be used for delivering a custom Captive Portal / Splash Page with Cisco Meraki access points.
 
 More info about the ExCap API: https://meraki.cisco.com/lib/pdf/meraki_whitepaper_captive_portal.pdf
 
 Complete write-up for this application can be found here: http://www.InternetOfLEGO.com/wifi-hotspot-with-social-oauth-passport-mongodb
 
 ###Written by
-Cory Guynn, 2015
+Cory Guynn, 2016
 www.InternetOfLego.com
 
 
