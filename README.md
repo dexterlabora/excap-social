@@ -142,10 +142,10 @@ pm2 start app.js --name "excap-social"
 
 
 #Reporting
-You can see the session data by going to the MongoDB REST API. This should be disabled.
+You can see the session data by going to the MongoDB REST API or exploring the MongoDB manually.
 
-http://yourserver/ap1/v1/users
-http://yourserver/ap1/v1/sessions
+*http://yourserver/ap1/v1/users
+*http://yourserver/ap1/v1/sessions
 
 
 
