@@ -19,19 +19,19 @@ www.InternetOfLego.com
 
 ##Configure the Cisco Meraki Wi-Fi SSID
 
-..*Logon to the Meraki Dashboard
+* Logon to the Meraki Dashboard
 
-..*Dashboard --> Wireless --> Access Control: (select SSID name from list)
+* Dashboard --> Wireless --> Access Control: (select SSID name from list)
 
-..*Configure an SSID with a Sign-on or Click-through splash page.
+* Configure an SSID with a Sign-on or Click-through splash page.
 
-..*Scroll down the page and enable the "Walled Garden". Enter the IP address of your web server, to provide access to your splash page content prior to authentication. Enter any additional IP addresses for hosted content such as social websites (OAuth), style sheets, images, terms of service, etc in this section as well.
+* Scroll down the page and enable the "Walled Garden". Enter the IP address of your web server, to provide access to your splash page content prior to authentication. Enter any additional IP addresses for hosted content such as social websites (OAuth), style sheets, images, terms of service, etc in this section as well.
 
 ##Configure the Splash Page
 
-..*Dashboard --> Wireless --> Configure --> Splash Page Select: Use custom URL
+* Dashboard --> Wireless --> Configure --> Splash Page Select: Use custom URL
 
-..*Enter the URL for the splash page. 
+* Enter the URL for the splash page. 
 
 ###Sign-on w/ RADIUS
 
