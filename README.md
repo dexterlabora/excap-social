@@ -1,6 +1,6 @@
 # Cisco Meraki ExCap Splash Page Server /w Social OAuth using Passport
 
-Overview
+##Overview
 
 This NodeJS applications provides an example of the ExCap interface for delivering a custom Captive Portal / Splash Page for Cisco Meraki access points.
 
@@ -8,30 +8,30 @@ More info about the ExCap API: https://meraki.cisco.com/lib/pdf/meraki_whitepape
 
 Complete write-up for this application can be found here: http://www.InternetOfLEGO.com/wifi-hotspot-with-social-oauth-passport-mongodb
 
-#Written by
+###Written by
 Cory Guynn, 2015
 www.InternetOfLego.com
 
-##Enjoy!
+
 
 
 #Installation
 
 ##Configure the Cisco Meraki Wi-Fi SSID
 
-Logon to the Meraki Dashboard
+..Logon to the Meraki Dashboard
 
-Dashboard --> Wireless --> Access Control: (select SSID name from list)
+..Dashboard --> Wireless --> Access Control: (select SSID name from list)
 
-Configure an SSID with a Sign-on or Click-through splash page.
+..Configure an SSID with a Sign-on or Click-through splash page.
 
-Scroll down the page and enable the "Walled Garden". Enter the IP address of your web server, to provide access to your splash page content prior to authentication. Enter any additional IP addresses for hosted content such as images, terms of service, etc in this section as well.
+..Scroll down the page and enable the "Walled Garden". Enter the IP address of your web server, to provide access to your splash page content prior to authentication. Enter any additional IP addresses for hosted content such as social websites (OAuth), style sheets, images, terms of service, etc in this section as well.
 
-Configure the Splash Page
+##Configure the Splash Page
 
-Dashboard --> Wireless --> Configure --> Splash Page Select: Use custom URL
+..Dashboard --> Wireless --> Configure --> Splash Page Select: Use custom URL
 
-Enter the URL for the splash page. This flow provides two options, Sign-on and Click-through.
+..Enter the URL for the splash page. 
 
 ###Sign-on w/ RADIUS
 
