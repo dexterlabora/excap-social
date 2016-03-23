@@ -56,7 +56,7 @@ npm install
 
 ##Install MongoDB
 
-Dowload and instructions:
+Download and instructions:
 https://www.mongodb.org/downloads#production
 
 ##Create Config files
