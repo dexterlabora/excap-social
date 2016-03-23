@@ -33,14 +33,14 @@ www.InternetOfLego.com
 
 * Enter the URL for the splash page. 
 
-###Sign-on w/ RADIUS
+Sign-on w/ RADIUS
 
-http://yourserver/signon
+* http://yourserver/signon
 
 
-###Click-through w/ Social Passport
+Click-through w/ Social Passport
 
-http://yourserver/click
+* http://yourserver/click
 
 
 #Run
@@ -99,7 +99,7 @@ module.exports = {
 ```
 ###config/config.js
 
-This is where you will define the web port that the server listens on (i.e. 8181) and the SSL certificate information. You will need to create your own self-signed certificate or purchase one. This examples uses a GoDaddy SSL certificate and is placed the files in an SSL directory. 
+This is where you will define the web port that the server listens on (i.e. 8181) and the SSL certificate information. You will need to create your own self-signed certificate or purchase one. This examples uses a GoDaddy SSL certificate and places the files in an SSL directory. 
 ```
 // Configure the app settings here such as Web port, certificates, etc.
 
@@ -112,10 +112,10 @@ module.exports = {
   cert : fs.readFileSync('./ssl/excap.yourserver.com-gd-signed.crt'),
   ca: [fs.readFileSync('./ssl/gd_bundle-g2-g1.crt')]
 };
-
+```
 
 ###config/database.js
-
+```
 Store the connection string to your MongoDB database here
 
 // config/database.js
