@@ -1,0 +1,31 @@
+// config/auth.js
+
+
+// expose our config directly to our application using module.exports
+module.exports = {
+
+    'facebookAuth' : {
+        'clientID'        : 'xxxxxxxxxxxxxxxxxx', // your App ID
+        'clientSecret'    : 'xxxxxxxxxxxxxxxxxx', // your App Secret
+        'callbackURL'     : 'https://yourserver:8181/auth/facebook/callback'
+    },
+
+    'twitterAuth' : {
+        'consumerKey'        : 'xxxxxxxxxxxxxxxxxx',
+        'consumerSecret'     : 'yMWhmXrwapDX5rQZXJ7TLY7TGMDRoIn1OKyS1w6WDCGlmExCbm',
+        'callbackURL'        : 'https://uourserver:8181/auth/twitter/callback'
+    },
+
+    'linkedinAuth' : {
+        'consumerKey'        : 'xxxxxxxxxxxxxxxxxx',
+        'consumerSecret'     : 'd8xns39PGjJ6kkL8',
+        'callbackURL'        : 'https://yourserver:8181/auth/linkedin/callback'
+    },
+
+    'googleAuth' : {
+        'clientID'         : 'xxxxxxxxxxxxxxxxxx.apps.googleusercontent.com',
+        'clientSecret'     : 'xxxxxxxxxxxxxxxxxx',
+        'callbackURL'      : 'https://yourserver:8181/auth/google/callback'
+    }
+
+};
