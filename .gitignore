@@ -1,3 +1,5 @@
 auth.js
 config.js
 /ssl
+*.sample
+*DS_Store

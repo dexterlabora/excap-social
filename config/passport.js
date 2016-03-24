@@ -183,7 +183,7 @@ module.exports = function(passport) {
                         if (!user.facebook.token) {
                             user.facebook.token   = token;
                             user.facebook.name    = profile.name.givenName + ' ' + profile.name.familyName;
-                            user.facebook.email   = (profile.emails[0].value || '').toLowerCase();
+                            user.facebook.email   = (profile.email) ? profile.emails[0].value.toLowerCase() : '';
                             user.facebook.profile = profile;
 
                             user.save(function(err) {
@@ -202,7 +202,7 @@ module.exports = function(passport) {
                         newUser.facebook.id         = profile.id;
                         newUser.facebook.token      = token;
                         newUser.facebook.name       = profile.name.givenName + ' ' + profile.name.familyName;
-                        newUser.facebook.email      = (profile.emails[0].value || '').toLowerCase();
+                        newUser.facebook.email      = (profile.email) ? profile.emails[0].value.toLowerCase() : '';
                         newUser.facebook.profile    = profile;
 
                         newUser.save(function(err) {
@@ -221,7 +221,7 @@ module.exports = function(passport) {
                 user.facebook.id          = profile.id;
                 user.facebook.token       = token;
                 user.facebook.name        = profile.name.givenName + ' ' + profile.name.familyName;
-                user.facebook.email       = (profile.emails[0].value || '').toLowerCase();
+                user.facebook.email       = (profile.email) ? profile.emails[0].value.toLowerCase() : '';
                 user.facebook.profile     = profile;
 
                 user.save(function(err) {
@@ -393,7 +393,6 @@ module.exports = function(passport) {
     // GOOGLE ==================================================================
     // =========================================================================
     passport.use(new GoogleStrategy({
-
         clientID        : configAuth.googleAuth.clientID,
         clientSecret    : configAuth.googleAuth.clientSecret,
         callbackURL     : configAuth.googleAuth.callbackURL,
