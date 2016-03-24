@@ -12,18 +12,18 @@ module.exports = {
 
     'twitterAuth' : {
         'consumerKey'        : 'xxxxxxxxxxxxxxxxxx',
-        'consumerSecret'     : 'yMWhmXrwapDX5rQZXJ7TLY7TGMDRoIn1OKyS1w6WDCGlmExCbm',
+        'consumerSecret'     : 'xxxxxxxxxxxxxxxxxx',
         'callbackURL'        : 'https://uourserver:8181/auth/twitter/callback'
     },
 
     'linkedinAuth' : {
         'consumerKey'        : 'xxxxxxxxxxxxxxxxxx',
-        'consumerSecret'     : 'd8xns39PGjJ6kkL8',
+        'consumerSecret'     : 'xxxxxxxxxxxxxxxxxx',
         'callbackURL'        : 'https://yourserver:8181/auth/linkedin/callback'
     },
 
     'googleAuth' : {
-        'clientID'         : 'xxxxxxxxxxxxxxxxxx.apps.googleusercontent.com',
+        'clientID'         : 'xxxxxxxxxxxxxxxxxx',
         'clientSecret'     : 'xxxxxxxxxxxxxxxxxx',
         'callbackURL'      : 'https://yourserver:8181/auth/google/callback'
     }
