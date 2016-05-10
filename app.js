@@ -150,6 +150,7 @@ var exphbs = require('express3-handlebars');
 app.engine('.hbs', exphbs({defaultLayout: 'single', extname: '.hbs'}));
 app.set('view engine', '.hbs');
 
+
 // =================================
 // ROUTES #########################################################
 // =================================
@@ -176,6 +177,7 @@ app.use('/api/v1', expressMongoRest('mongodb://localhost:27017/excap'));
 app.get('/click', function (req, res) {
 
   // extract parameters (queries) from URL
+  req.session.protocol = req.protocol;
   req.session.host = req.headers.host;
   req.session.base_grant_url = req.query.base_grant_url;
   req.session.user_continue_url = req.query.user_continue_url;
@@ -183,9 +185,10 @@ app.get('/click', function (req, res) {
   req.session.client_ip = req.query.client_ip;
   req.session.client_mac = req.query.client_mac;
   req.session.splashclick_time = new Date().toString();
+  req.session.logout_url_continue = false; // no support for logout url with click through method
 
   // success page options instead of continuing on to intended url
-  req.session.success_url = 'https://' + req.session.host + "/success";
+  req.session.success_url = req.session.protocol + '://' + req.session.host + "/successClick";
   req.session.continue_url = req.query.user_continue_url;
 
   
@@ -197,9 +200,23 @@ app.get('/click', function (req, res) {
 
 });
 
+// #############
+// success for click through page
+// #############
+app.get('/successClick', function (req, res) {
+  // extract parameters (queries) from URL
+  req.session.host = req.headers.host;
+  req.session.success_time = new Date();
+    
+  console.log("Session data at success page = " + util.inspect(req.session, false, null));
+
+  // render sucess page using handlebars template and send in session data
+  res.render('success', req.session);
+});
+
 
 // ****************************************
-// PASSPORT Login Methods
+// PASSPORT Login Methods for Click Through
 // ****************************************
 
 // LOCAL --------------------------------
@@ -320,7 +337,7 @@ app.get('/signon', function (req, res) {
   req.session.ap_tags = req.query.ap_tags;
   req.session.client_ip = req.query.client_ip;
   req.session.client_mac = req.query.client_mac;
-  req.session.success_url =  req.protocol + '://' + req.session.host + "/success";
+  req.session.success_url =  req.protocol + '://' + req.session.host + "/successSignOn";
   req.session.signon_time = new Date();
     // display data for debugging purposes
   console.log("Session data at signon page = " + util.inspect(req.session, false, null));
@@ -329,17 +346,17 @@ app.get('/signon', function (req, res) {
 });
 
 // #############
-// success page
+// success for sign on page
 // #############
-app.get('/success', function (req, res) {
+app.get('/successSignOn', function (req, res) {
   // extract parameters (queries) from URL
   req.session.host = req.headers.host;
+  req.session.success_time = new Date();
   req.session.logout_url = req.query.logout_url;
   req.session.logout_url_continue = req.query.logout_url + "&continue_url=" + req.session.protocol+ '://' + req.session.host + "/logout";
+  console.log("Logout URL = " + util.inspect(req.logout_url_continue)); 
 
-  req.session.success_time = new Date();
-
-  console.log("Logout URL = " + util.inspect(req.logout_url_continue));
+    
   console.log("Session data at success page = " + util.inspect(req.session, false, null));
 
   // render sucess page using handlebars template and send in session data
@@ -356,10 +373,6 @@ app.get('/logout', function (req, res) {
   req.session.duration.ms = Math.abs(req.session.loggedout_time - req.session.success_time); // total milliseconds
   req.session.duration.sec = Math.floor((req.session.duration.ms/1000) % 60);
   req.session.duration.min = (req.session.duration.ms/1000/60) << 0;
-
-  // extract parameters (queries) from URL
-  req.session.host = req.headers.host;
-  req.session.logout_url = req.query.logout_url + "?continue_url=" + 'http://' + req.session.host + "/logged-out";
 
   // do something with the session data (i.e. console, database, file, etc. )
     // display data for debugging purposes
