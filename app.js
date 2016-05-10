@@ -312,6 +312,7 @@ app.get('/auth/wifi', function(req, res){
 app.get('/signon', function (req, res) {
 
   // extract parameters (queries) from URL
+  req.session.protocol = req.protocol;
   req.session.host = req.headers.host;
   req.session.login_url = req.query.login_url;
   req.session.continue_url = req.query.continue_url;
@@ -319,7 +320,7 @@ app.get('/signon', function (req, res) {
   req.session.ap_tags = req.query.ap_tags;
   req.session.client_ip = req.query.client_ip;
   req.session.client_mac = req.query.client_mac;
-  req.session.success_url = 'http://' + req.session.host + "/success";
+  req.session.success_url =  req.protocol + '://' + req.session.host + "/success";
   req.session.signon_time = new Date();
     // display data for debugging purposes
   console.log("Session data at signon page = " + util.inspect(req.session, false, null));
@@ -334,9 +335,11 @@ app.get('/success', function (req, res) {
   // extract parameters (queries) from URL
   req.session.host = req.headers.host;
   req.session.logout_url = req.query.logout_url;
-  req.user_logout_url = req.query.user_logout_url + "&continue_url=" + 'http://' + req.session.host + "/logout";
+  req.session.logout_url_continue = req.query.logout_url + "&continue_url=" + req.session.protocol+ '://' + req.session.host + "/logout";
+
   req.session.success_time = new Date();
 
+  console.log("Logout URL = " + util.inspect(req.logout_url_continue));
   console.log("Session data at success page = " + util.inspect(req.session, false, null));
 
   // render sucess page using handlebars template and send in session data
